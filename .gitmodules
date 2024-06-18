@@ -1,0 +1,6 @@
+[submodule "repository-manager-backend-a"]
+	path = repository-manager-backend-a
+	url = https://github.com/JoseEduardoMartins/repository-manager-backend-a.git
+[submodule "repository-manager-backend-b"]
+	path = repository-manager-backend-b
+	url = https://github.com/JoseEduardoMartins/repository-manager-backend-b.git
