@@ -12,33 +12,39 @@ Certifique-se de ter as seguintes dependências instaladas antes de iniciar:
 
 ## Instruções de Configuração
 
-1. Clone o repositório
+1. Clone o repositório com seus submodulos
 
 ```bash
-git clone https://github.com/JoseEduardoMartins/repository-manager-backend.git
+git clone --recurse-submodules https://github.com/JoseEduardoMartins/repository-manager-backend.git
 
 cd repository-manager-backend
 ```
 
-2. Clone o subrepositório repository-manager-backend-a
+2. Vá até o subrepositório repository-manager-backend-a e instale as dependencias
 
 ```bash
-git submodule add https://github.com/JoseEduardoMartins/repository-manager-backend-a.git repository-manager-backend-a
+cd ./repository-manager-backend-a
 
-git submodule update --init --recursive
+npm install
 ```
 
-3. Clone o subrepositório repository-manager-backend-b
+3. Volte para raiz do projeto
 
 ```bash
-git submodule add https://github.com/JoseEduardoMartins/repository-manager-backend-b.git repository-manager-backend-b
-
-git submodule update --init --recursive
+cd ../
 ```
 
-4. Configure as variáveis de ambiente no arquivo "docker-compose.yml".
+4. Vá até o subrepositório repository-manager-backend-b e instale as dependencias
 
-5. Inicie o microserviço:
+```bash
+cd ./repository-manager-backend-b
+
+npm install
+```
+
+5. Configure as variáveis de ambiente no arquivo "docker-compose.yml".
+
+6. Inicie o microserviço:
 
 ```bash
 docker-compose up --build
