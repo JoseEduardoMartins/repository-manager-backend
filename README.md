@@ -28,23 +28,17 @@ cd ./repository-manager-backend-a
 npm install
 ```
 
-3. Volte para raiz do projeto
+3. Vá até o subrepositório repository-manager-backend-b e instale as dependencias
 
 ```bash
-cd ../
-```
-
-4. Vá até o subrepositório repository-manager-backend-b e instale as dependencias
-
-```bash
-cd ./repository-manager-backend-b
+cd ../repository-manager-backend-b
 
 npm install
 ```
 
-5. Configure as variáveis de ambiente no arquivo "docker-compose.yml".
+4. Configure as variáveis de ambiente no arquivo "docker-compose.yml".
 
-6. Inicie o microserviço:
+5. Inicie o microserviço:
 
 ```bash
 docker-compose up --build
