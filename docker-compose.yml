@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    container_name: "repository-manager-rabbitmq"
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret-cookie"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  db:
+    container_name: "repository-manager-db"
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: repository_manager_db
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
+
+  repository-manager-backend-a:
+    container_name: "repository-manager-backend-a"
+    build:
+      context: ./repository-manager-backend-a
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      APP_PORT: 3000
+      DB_TYPE: "mysql"
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: "repository_manager_db"
+      DB_USERNAME: "root"
+      DB_PASSWORD: "root"
+    depends_on:
+      - db
+      - rabbitmq
+
+  repository-manager-backend-b:
+    container_name: "repository-manager-backend-b"
+    build:
+      context: ./repository-manager-backend-b
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      APP_PORT: 3001
+      APP_PATH: "/api"
+      GITHUB_BASE_URL: "https://api.github.com"
+    depends_on:
+      - rabbitmq
+      - repository-manager-backend-a
